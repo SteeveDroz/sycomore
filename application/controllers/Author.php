@@ -37,4 +37,12 @@ class Author extends CI_Controller
         $this->load->view('pages/author/add', ['name' => $name]);
         $this->load->view('templates/footer');
     }
+
+    public function show($id)
+    {
+        $author = $this->author_model->find($id);
+        $this->load->view('templates/header', ['title' => xss_clean($author->name)]);
+        $this->load->view('pages/author/show', ['author' => $author]);
+        $this->load->view('templates/footer');
+    }
 }
