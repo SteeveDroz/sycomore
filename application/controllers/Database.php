@@ -11,7 +11,8 @@ class Database extends CI_Controller
         $this->dbforge->add_field('id');
         $this->dbforge->add_field([
             'name' => [
-                'type' => 'TEXT',
+                'type' => 'VARCHAR',
+                'constraint' => 255,
                 'unique' => true
             ]
         ]);
@@ -20,13 +21,29 @@ class Database extends CI_Controller
         $this->dbforge->add_field('id');
         $this->dbforge->add_field([
             'name' => [
-                'type' => 'TEXT',
+                'type' => 'VARCHAR',
+                'constraint' => 255,
                 'unique' => true
             ],
             'fingers' => [
-                'type' => 'TEXT'
+                'type' => 'VARCHAR',
+                'constraint' => 6
             ]
         ]);
         $this->dbforge->create_table('chord', true);
+
+        $this->dbforge->add_field('id');
+        $this->dbforge->add_field([
+            'name' => [
+                'type' => 'TEXT',
+            ],
+            'content' => [
+                'type' => 'TEXT'
+            ],
+            'author' => [
+                'type' => 'INTEGER'
+            ]
+        ]);
+        $this->dbforge->create_table('score', true);
     }
 }
