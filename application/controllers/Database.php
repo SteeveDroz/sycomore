@@ -17,6 +17,16 @@ class Database extends CI_Controller
         ]);
         $this->dbforge->create_table('author', true);
 
-        
+        $this->dbforge->add_field('id');
+        $this->dbforge->add_field([
+            'name' => [
+                'type' => 'TEXT',
+                'unique' => true
+            ],
+            'fingers' => [
+                'type' => 'TEXT'
+            ]
+        ]);
+        $this->dbforge->create_table('chord', true);
     }
 }
