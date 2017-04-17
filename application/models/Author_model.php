@@ -14,4 +14,10 @@ class Author_model extends CI_Model
     {
         return $this->db->get(self::TABLE)->result_object();
     }
+
+    public function add($author)
+    {
+        $this->db->insert(self::TABLE, $author);
+        return $this->db->insert_id();
+    }
 }

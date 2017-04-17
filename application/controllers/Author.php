@@ -18,4 +18,23 @@ class Author extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function add()
+    {
+        $this->load->library('form_validation');
+        $name = trim($this->input->post('name'));
+
+        $this->form_validation->set_rules('name', 'Nom', 'trim|required|is_unique[author.name]');
+
+        if ($this->form_validation->run())
+        {
+            $author = new stdClass();
+            $author->name = $name;
+            $id = $this->author_model->add($author);
+            redirect('author/show/' . $id);
+        }
+
+        $this->load->view('templates/header', ['title' => 'Ajouter un auteur']);
+        $this->load->view('pages/author/add', ['name' => $name]);
+        $this->load->view('templates/footer');
+    }
 }
