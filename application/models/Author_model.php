@@ -10,8 +10,11 @@ class Author_model extends CI_Model
         $this->load->database();
     }
 
-    public function findAll()
+    public function findAll($order_by = [])
     {
+        foreach ($order_by as $field => $direction) {
+            $this->db->order_by($field, $direction);
+        }
         return $this->db->get(self::TABLE)->result_object();
     }
 

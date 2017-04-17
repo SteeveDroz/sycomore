@@ -11,7 +11,7 @@ class Author extends CI_Controller
 
     public function index()
     {
-        $authors = $this->author_model->findAll();
+        $authors = $this->author_model->findAll(['name' => 'ASC']);
 
         $this->load->view('templates/header', ['title' => 'Liste des auteurs']);
         $this->load->view('pages/author/index', ['authors' => $authors]);
