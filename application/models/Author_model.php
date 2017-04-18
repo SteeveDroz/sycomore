@@ -28,4 +28,10 @@ class Author_model extends CI_Model
         $this->db->insert(self::TABLE, $author);
         return $this->db->insert_id();
     }
+
+    public function update($author)
+    {
+        $this->db->where(['id' => $author->id]);
+        $this->db->update(self::TABLE, $author);
+    }
 }

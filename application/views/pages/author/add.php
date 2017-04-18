@@ -1,9 +1,2 @@
-<?php
-
-echo form_open();
-echo form_input(['name' => 'name', 'placeholder' => 'Nom', 'value' => $name??'']);
-echo form_submit('add', 'Ajouter');
-echo validation_errors();
-echo form_close();
- ?>
+<?php $this->load->view('pages/author/_form', ['submit_text' => 'Ajouter']) ?>
 <a href="<?php echo site_url('author') ?>">Retour</a>
