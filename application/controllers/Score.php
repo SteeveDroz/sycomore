@@ -17,4 +17,35 @@ class Score extends CI_Controller
         $this->load->view('pages/score/index', ['scores' => $scores]);
         $this->load->view('templates/footer');
     }
+
+    public function add()
+    {
+        $this->load->model('author_model');
+
+        $score = new stdClass();
+        $score->name = trim($this->input->post('name'));
+        $score->content = trim($this->input->post('content'));
+        $score->author = $this->input->post('author');
+
+        $this->form_validation->set_rules('name', 'Nom', 'trim|required');
+        $this->form_validation->set_rules('content', 'Texte', 'trim|required');
+        $this->form_validation->set_rules('author', 'Auteur', 'required|integer');
+
+        if ($this->form_validation->run())
+        {
+            $id = $this->score_model->add($score);
+            redirect(['score', 'show', $id]);
+        }
+
+        $authors = $this->author_model->findAll(['name' => 'ASC']);
+        $authorNames = [];
+        foreach ($authors as $author)
+        {
+            $authorNames[xss_clean($author->id)] = xss_clean($author->name);
+        }
+
+        $this->load->view('templates/header', ['title' => 'Ajouter un accord']);
+        $this->load->view('pages/score/add', ['score' => $score, 'authors' => $authorNames]);
+        $this->load->view('templates/footer');
+    }
 }
