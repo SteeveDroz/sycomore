@@ -25,7 +25,7 @@ class Score extends CI_Controller
         $score = new stdClass();
         $score->name = trim($this->input->post('name'));
         $score->content = trim($this->input->post('content'));
-        $score->author = $this->input->post('author');
+        $score->author->id = $this->input->post('author');
 
         $this->form_validation->set_rules('name', 'Nom', 'trim|required');
         $this->form_validation->set_rules('content', 'Texte', 'trim|required');

@@ -15,11 +15,18 @@ class Score_model extends CI_Model
         foreach ($order_by as $field => $direction) {
             $this->db->order_by($field, $direction);
         }
-        return $this->db->get(self::TABLE)->result_object();
+        $scores = $this->db->get(self::TABLE)->result_object();
+        $this->load->model('author_model');
+        array_walk($scores, function(&$score)
+        {
+            $score->author = $this->author_model->find($score->author);
+        });
+        return $scores;
     }
 
     public function add($score)
     {
+        $score->author = $score->author->id;
         $this->db->insert(self::TABLE, $score);
         return $this->db->insert_id();
     }
