@@ -38,7 +38,6 @@ class Score extends CI_Controller
             redirect(['score', 'show', xss_clean($id)]);
         }
 
-        $authors = $this->author_model->findAll(['name' => 'ASC']);
         $authorNames = $this->author_model->getListForSelect();
 
         $this->load->view('templates/header', ['title' => 'Ajouter un accord']);
@@ -62,7 +61,7 @@ class Score extends CI_Controller
         $score->name = $this->input->post('name') ?? $score->name;
         $score->content = $this->input->post('content') ?? $score->content;
         $score->author->id = $this->input->post('author') ?? $score->author->id;
-        
+
         $this->form_validation->set_rules('name', 'Nom', 'trim|required');
         $this->form_validation->set_rules('content', 'Texte', 'trim|required');
         $this->form_validation->set_rules('author', 'Auteur', 'required|integer');
