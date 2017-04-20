@@ -18,14 +18,15 @@ class Score extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function add()
+    public function add($authorId = null)
     {
         $this->load->model('author_model');
 
         $score = new stdClass();
         $score->name = trim($this->input->post('name'));
         $score->content = trim($this->input->post('content'));
-        $score->author->id = $this->input->post('author');
+        $score->author = new stdClass();
+        $score->author->id = $this->input->post('author') ?? $authorId;
 
         $this->form_validation->set_rules('name', 'Nom', 'trim|required');
         $this->form_validation->set_rules('content', 'Texte', 'trim|required');
@@ -45,7 +46,7 @@ class Score extends CI_Controller
         }
 
         $this->load->view('templates/header', ['title' => 'Ajouter un accord']);
-        $this->load->view('pages/score/add', ['score' => $score, 'authors' => $authorNames]);
+        $this->load->view('pages/score/add', ['score' => $score, 'authors' => $authorNames, 'fixedAuthor' => $authorId != null]);
         $this->load->view('templates/footer');
     }
 }
