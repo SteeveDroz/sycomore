@@ -38,9 +38,13 @@ class Author extends CI_Controller
 
     public function show($id)
     {
+        $this->load->model('score_model');
+
         $author = $this->author_model->find($id);
+        $scores = $this->score_model->findBy(['author' => $author->id], ['name' => 'ASC']);
+
         $this->load->view('templates/header', ['title' => xss_clean($author->name)]);
-        $this->load->view('pages/author/show', ['author' => $author]);
+        $this->load->view('pages/author/show', ['author' => $author, 'scores' => $scores]);
         $this->load->view('templates/footer');
     }
 

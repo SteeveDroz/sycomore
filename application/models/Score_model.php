@@ -10,17 +10,36 @@ class Score_model extends CI_Model
         $this->load->database();
     }
 
-    public function findAll($order_by = [])
+    public function findAll($orderBy = [])
     {
-        foreach ($order_by as $field => $direction) {
+        foreach ($orderBy as $field => $direction) {
             $this->db->order_by($field, $direction);
         }
         $scores = $this->db->get(self::TABLE)->result_object();
-        $this->load->model('author_model');
-        array_walk($scores, function(&$score)
+        $this->loadAllAuthors($scores);
+        return $scores;
+    }
+
+    public function findBy($criterias, $orderBy)
+    {
+        $first = true;
+        foreach($criterias as $criteria => $value)
         {
-            $score->author = $this->author_model->find($score->author);
-        });
+            if ($first)
+            {
+                $this->db->where($criteria, $value);
+            }
+            else {
+                $this->db->and_where($criteria, $value);
+            }
+        }
+
+        foreach ($orderBy as $field => $direction) {
+            $this->db->order_by($field, $direction);
+        }
+
+        $scores = $this->db->get(self::TABLE)->result_object();
+        $this->loadAllAuthors($scores);
         return $scores;
     }
 
@@ -29,5 +48,14 @@ class Score_model extends CI_Model
         $score->author = $score->author->id;
         $this->db->insert(self::TABLE, $score);
         return $this->db->insert_id();
+    }
+
+    private function loadAllAuthors($scores)
+    {
+        $this->load->model('author_model');
+        array_walk($scores, function(&$score)
+        {
+            $score->author = $this->author_model->find($score->author);
+        });
     }
 }
