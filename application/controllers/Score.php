@@ -49,4 +49,12 @@ class Score extends CI_Controller
         $this->load->view('pages/score/add', ['score' => $score, 'authors' => $authorNames, 'fixedAuthor' => $authorId != null]);
         $this->load->view('templates/footer');
     }
+
+    public function show($id)
+    {
+        $score = $this->score_model->find($id);
+        $this->load->view('templates/header', ['title' => $score->name]);
+        $this->load->view('pages/score/show', ['score' => $score]);
+        $this->load->view('templates/footer');
+    }
 }

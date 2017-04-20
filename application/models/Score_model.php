@@ -20,6 +20,13 @@ class Score_model extends CI_Model
         return $scores;
     }
 
+    public function find($id)
+    {
+        $scores = $this->db->get_where(self::TABLE, ['id' => $id])->result_object();
+        $this->loadAllAuthors($scores);
+        return $scores[0];
+    }
+
     public function findBy($criterias, $orderBy)
     {
         $first = true;
