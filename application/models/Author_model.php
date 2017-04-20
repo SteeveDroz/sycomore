@@ -34,4 +34,15 @@ class Author_model extends CI_Model
         $this->db->where(['id' => $author->id]);
         $this->db->update(self::TABLE, $author);
     }
+
+    public function getListForSelect()
+    {
+        $authors = $this->findAll(['name' => 'ASC']);
+        $authorNames = [];
+        foreach ($authors as $author)
+        {
+            $authorNames[xss_clean($author->id)] = xss_clean($author->name);
+        }
+        return $authorNames;
+    }
 }

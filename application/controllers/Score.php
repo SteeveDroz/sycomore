@@ -35,15 +35,11 @@ class Score extends CI_Controller
         if ($this->form_validation->run())
         {
             $id = $this->score_model->add($score);
-            redirect(['score', 'show', $id]);
+            redirect(['score', 'show', xss_clean($id)]);
         }
 
         $authors = $this->author_model->findAll(['name' => 'ASC']);
-        $authorNames = [];
-        foreach ($authors as $author)
-        {
-            $authorNames[xss_clean($author->id)] = xss_clean($author->name);
-        }
+        $authorNames = $this->author_model->getListForSelect();
 
         $this->load->view('templates/header', ['title' => 'Ajouter un accord']);
         $this->load->view('pages/score/add', ['score' => $score, 'authors' => $authorNames, 'fixedAuthor' => $authorId != null]);
@@ -55,6 +51,32 @@ class Score extends CI_Controller
         $score = $this->score_model->find($id);
         $this->load->view('templates/header', ['title' => $score->name]);
         $this->load->view('pages/score/show', ['score' => $score]);
+        $this->load->view('templates/footer');
+    }
+
+    public function edit($id)
+    {
+        $this->load->model('author_model');
+
+        $score = $this->score_model->find($id);
+        $score->name = $this->input->post('name') ?? $score->name;
+        $score->content = $this->input->post('content') ?? $score->content;
+        $score->author->id = $this->input->post('author') ?? $score->author->id;
+        
+        $this->form_validation->set_rules('name', 'Nom', 'trim|required');
+        $this->form_validation->set_rules('content', 'Texte', 'trim|required');
+        $this->form_validation->set_rules('author', 'Auteur', 'required|integer');
+
+        if ($this->form_validation->run())
+        {
+            $this->score_model->update($score);
+            redirect(['score', 'show', xss_clean($score->id)]);
+        }
+
+        $authorNames = $this->author_model->getListForSelect();
+
+        $this->load->view('templates/header', ['title' => $score->name]);
+        $this->load->view('pages/score/edit', ['score' => $score, 'authors' => $authorNames]);
         $this->load->view('templates/footer');
     }
 }

@@ -57,6 +57,13 @@ class Score_model extends CI_Model
         return $this->db->insert_id();
     }
 
+    public function update($score)
+    {
+        $score->author = $score->author->id;
+        $this->db->where(['id' => $score->id]);
+        $this->db->update(self::TABLE, $score);
+    }
+
     private function loadAllAuthors($scores)
     {
         $this->load->model('author_model');
