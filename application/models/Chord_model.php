@@ -19,6 +19,11 @@ class Chord_model extends CI_Model
         return $this->db->get(self::TABLE)->result_object();
     }
 
+    public function find($id)
+    {
+        return $this->db->get_where(self::TABLE, ['id' => $id])->result_object()[0];
+    }
+
     public function add($chord)
     {
         $this->db->insert(self::TABLE, $chord);
