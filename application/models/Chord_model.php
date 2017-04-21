@@ -18,4 +18,10 @@ class Chord_model extends CI_Model
         }
         return $this->db->get(self::TABLE)->result_object();
     }
+
+    public function add($chord)
+    {
+        $this->db->insert(self::TABLE, $chord);
+        return $this->db->insert_id();
+    }
 }
