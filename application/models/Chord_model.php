@@ -29,4 +29,10 @@ class Chord_model extends CI_Model
         $this->db->insert(self::TABLE, $chord);
         return $this->db->insert_id();
     }
+
+    public function update($chord)
+    {
+        $this->db->where(['id' => $chord->id]);
+        $this->db->update(self::TABLE, $chord);
+    }
 }

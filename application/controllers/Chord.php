@@ -47,6 +47,26 @@ class Chord extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function edit($id)
+    {
+        $chord = $this->chord_model->find($id);
+        $chord->name = trim($this->input->post('name') ?? $chord->name);
+        $chord->fingers = trim($this->input->post('fingers') ?? $chord->fingers);
+
+        $this->form_validation->set_rules('name', 'Nom', 'trim|required');
+        $this->form_validation->set_rules('fingers', 'Doigts', 'trim|required|min_length[6]|max_length[6]');
+
+        if ($this->form_validation->run())
+        {
+            $this->chord_model->update($chord);
+            redirect(['chord', 'show', xss_clean($chord->id)]);
+        }
+
+        $this->load->view('templates/header', ['title' => $chord->name]);
+        $this->load->view('pages/chord/edit', ['chord' => $chord]);
+        $this->load->view('templates/footer');
+    }
+
     public function draw($id)
     {
         $this->output->set_content_type('image/png');
