@@ -38,6 +38,15 @@ class Chord extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function show($id)
+    {
+        $chord = $this->chord_model->find($id);
+
+        $this->load->view('templates/header', ['title' => $chord->name]);
+        $this->load->view('pages/chord/show', ['chord' => $chord]);
+        $this->load->view('templates/footer');
+    }
+
     public function draw($id)
     {
         $this->output->set_content_type('image/png');
