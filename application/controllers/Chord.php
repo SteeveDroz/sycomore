@@ -130,13 +130,11 @@ class Chord extends CI_Controller
         else {
           $background = imagecolorallocate($image, 255, 0, 0);
           $color = imagecolorallocate($image, 255, 255, 255);
-          imagestring($image, 5, 15, 5, utf8_decode(x ), $color);
+          imagestring($image, 5, 15, 5, utf8_decode($id), $color);
         }
 
         imagepng($image);
         imagedestroy($image);
-
-        return $response;
     }
 }
 ?>

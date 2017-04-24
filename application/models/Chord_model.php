@@ -13,7 +13,8 @@ class Chord_model extends CI_Model
 
     public function findAll($orderBy)
     {
-        foreach ($orderBy as $field => $direction) {
+        foreach ($orderBy as $field => $direction)
+        {
             $this->db->order_by($field, $direction);
         }
         return $this->db->get(self::TABLE)->result_object();
@@ -21,7 +22,26 @@ class Chord_model extends CI_Model
 
     public function find($id)
     {
-        return $this->db->get_where(self::TABLE, ['id' => $id])->result_object()[0];
+        $chords = $this->db->get_where(self::TABLE, ['id' => $id])->result_object();
+        return $chords[0] ?? null;
+    }
+
+    public function findArray($field, $criterias)
+    {
+        $first = true;
+        foreach ($criterias as $criteria)
+        {
+            if ($first)
+            {
+                $this->db->where($field, $criteria);
+                $first = false;
+            }
+            else
+            {
+                $this->db->or_where($field, $criteria);
+            }
+        }
+        return $this->db->get(self::TABLE)->result_object();
     }
 
     public function add($chord)
