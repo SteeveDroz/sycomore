@@ -28,6 +28,11 @@ class Database extends CI_Controller
             'fingers' => [
                 'type' => 'VARCHAR',
                 'constraint' => 6
+            ],
+            'slug' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'unique' => true
             ]
         ]);
         $this->dbforge->create_table('chord', true);
