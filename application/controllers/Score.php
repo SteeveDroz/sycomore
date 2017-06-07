@@ -116,6 +116,9 @@ class Score extends CI_Controller
 
     private function parse($content)
     {
+        $content = nl2br($content);
+        $content = preg_replace('/\] *\[/','_$0', $content);
+        $content = preg_replace('/\[([^\]]+)_\]/U','<div class="chord spaceAfter">$1</div>', $content);
         $content = preg_replace('/\[(.+)\]/U','<div class="chord">$1</div>', $content);
         return $content;
     }

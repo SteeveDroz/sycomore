@@ -7,3 +7,7 @@
     vertical-align: bottom;
     width: 0;
 }
+
+.score .spaceAfter {
+    margin-right: 5em;
+}
