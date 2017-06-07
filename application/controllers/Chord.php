@@ -18,10 +18,10 @@ class Chord extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function add()
+    public function add($name = null)
     {
         $chord = new stdClass();
-        $chord->name = trim($this->input->post('name'));
+        $chord->name = trim($this->input->post('name') ?? $name);
         $chord->fingers = $this->input->post('fingers');
 
         $this->form_validation->set_rules('name', 'Nom', 'trim|required');
@@ -34,7 +34,7 @@ class Chord extends CI_Controller
         }
 
         $this->load->view('templates/header', ['title' => 'Nouvel accord']);
-        $this->load->view('pages/chord/add', ['chord' => $chord]);
+        $this->load->view('pages/chord/add', ['chord' => $chord, 'disabled' => $name != null]);
         $this->load->view('templates/footer');
     }
 

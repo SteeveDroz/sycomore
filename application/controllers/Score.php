@@ -107,7 +107,7 @@ class Score extends CI_Controller
             }
             if (!isset($chordList[$chordName]))
             {
-                $chordList[$chordName] = null;
+                $chordList[$chordName] = (object)['id' => 0, 'name' => $chordName, 'fingers' => null];
             }
         }
 

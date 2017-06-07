@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function sluggify($name)
+function slugify($name)
 {
     $slug = $name;
     $slug = preg_replace('/\s+/', '-', $slug);
