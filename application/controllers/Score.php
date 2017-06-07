@@ -116,6 +116,7 @@ class Score extends CI_Controller
 
     private function parse($content)
     {
+        $content = preg_replace('/\[(.+)\]/U','<div class="chord">$1</div>', $content);
         return $content;
     }
 }

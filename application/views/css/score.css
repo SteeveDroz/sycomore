@@ -1,0 +1,9 @@
+.score {
+}
+
+.score .chord {
+    margin-bottom: 1em;
+    display: inline-block;
+    vertical-align: bottom;
+    width: 0;
+}

@@ -6,5 +6,7 @@
     ?>
     <a href="<?php echo $link ?>"><img src="<?php echo site_url(['chord', 'draw', $chord->id]) ?>"></a>
 <?php endforeach; ?>
-<?php echo xss_clean($score->content) ?>
+<div class="score">
+    <?php echo xss_clean($score->content) ?>
+</div>
 <a href="<?php echo site_url(['score', 'edit', xss_clean($score->id)]) ?>">Éditer</a>

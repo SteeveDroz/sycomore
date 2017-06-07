@@ -21,7 +21,7 @@ class Chord extends CI_Controller
     public function add($name = null)
     {
         $chord = new stdClass();
-        $chord->name = trim($this->input->post('name') ?? $name);
+        $chord->name = trim(urldecode($this->input->post('name') ?? $name));
         $chord->fingers = $this->input->post('fingers');
 
         $this->form_validation->set_rules('name', 'Nom', 'trim|required');
