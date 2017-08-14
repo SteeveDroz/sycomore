@@ -119,6 +119,19 @@ class Score extends CI_Controller
         $content = nl2br($content);
         $content = preg_replace('/\] *\[/','_$0', $content);
         $content = preg_replace('/\[([^\]]+)_\]/U','<div class="chord spaceAfter">$1</div>', $content);
+        $content = preg_replace_callback(
+            '/\[(.+)\]([^\[]+)(?=\[)/U',
+            function($matches)
+            {
+                $output = '[' . $matches[1] . ']' . $matches[2];
+                for ($i = strlen($matches[2]); $i < strlen($matches[1]); $i++)
+                {
+                    $output .= '—';
+                }
+                return $output;
+            },
+            $content
+        );
         $content = preg_replace('/\[(.+)\]/U','<div class="chord">$1</div>', $content);
         return $content;
     }
