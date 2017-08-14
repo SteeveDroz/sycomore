@@ -46,7 +46,7 @@ class Chord_model extends CI_Model
 
     public function add($chord)
     {
-        $slug = slugify($chord->name);
+        $chord->slug = slugify($chord->name);
         $this->db->insert(self::TABLE, $chord);
         return $this->db->insert_id();
     }
