@@ -38,7 +38,7 @@ class Author_model extends CI_Model
     public function getListForSelect()
     {
         $authors = $this->findAll(['name' => 'ASC']);
-        $authorNames = [];
+        $authorNames = [0 => '--- Choisir ---', -1 => 'Nouvel auteur'];
         foreach ($authors as $author)
         {
             $authorNames[xss_clean($author->id)] = xss_clean($author->name);
